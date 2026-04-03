@@ -1,0 +1,64 @@
+<div class="form-container">
+    <app-progress-stepper [currentStep]="2"></app-progress-stepper>
+    <p-toast></p-toast>
+    <div class="form-header">
+        <h1>References</h1>
+        <p>Please provide reference information</p>
+    </div>
+    
+    <form [formGroup]="referencesForm">
+        <div formArrayName="references">
+            <div *ngFor="let reference of references.controls; let i = index" 
+                 [formGroupName]="i" 
+                 class="reference-section">
+                <div class="reference-header">
+                    <h3>Reference {{i + 1}} <span *ngIf="i < 2" class="required">*</span></h3>
+                    <button *ngIf="i >= 2" 
+                            type="button" 
+                            (click)="removeReference(i)" 
+                            class="btn-remove">
+                        Remove
+                    </button>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label [for]="'referenceName' + i">Name <span *ngIf="i < 2" class="required">*</span></label>
+                        <input type="text" 
+                               [id]="'referenceName' + i" 
+                               formControlName="name">
+                        <div *ngIf="reference.get('name')?.invalid && reference.get('name')?.touched"
+                             class="field-note error">
+                            <span *ngIf="reference.get('name')?.errors?.['required']">* Required</span>
+                            <span *ngIf="reference.get('name')?.errors?.['pattern']">Name should contain only letters</span>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label [for]="'referencePhone' + i">Telephone Number <span *ngIf="i < 2" class="required">*</span></label>
+                        <input type="tel" 
+                               [id]="'referencePhone' + i" 
+                               formControlName="phone">
+                        <div *ngIf="reference.get('phone')?.invalid && reference.get('phone')?.touched"
+                             class="field-note error">
+                            <span *ngIf="reference.get('phone')?.errors?.['required']">* Required</span>
+                            <span *ngIf="reference.get('phone')?.errors?.['pattern']">* Not a Valid Mobile Number</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="add-reference-section">
+            <button type="button" (click)="addReference()" class="btn btn-add">
+                + Add Another Reference
+            </button>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" (click)="previousPage()" class="btn btn-next">Previous Page</button>
+            <button type="button" (click)="saveReferences()" class="btn btn-save">Save References</button>
+            <button type="button" (click)="nextPage()" class="btn btn-next">Next Page</button>
+        </div>
+    </form>
+</div>

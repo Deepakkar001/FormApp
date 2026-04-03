@@ -1,0 +1,65 @@
+<div class="bank-page">
+  <app-progress-stepper [currentStep]="1"></app-progress-stepper>
+  <p-toast></p-toast>
+  <header class="page-header">
+    <h1>Banking Details</h1>
+    <p>Please provide the applicant’s banking information.</p>
+  </header>
+
+  <form [formGroup]="bankingForm" (ngSubmit)="onSubmit()" class="bank-card form-grid" novalidate>
+    <div class="form-row">
+      <label for="bankName">Bank Name</label>
+      <select id="bankName" formControlName="bankName">
+        <option value="" disabled>Select a bank</option>
+        <option *ngFor="let b of banks" [value]="b">{{ b }}</option>
+      </select>
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error" *ngIf="bankingForm.get('bankName')?.touched && bankingForm.get('bankName')?.hasError('required')">
+          This field is required.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="branch">Branch</label>
+      <input id="branch" type="text" formControlName="branch" placeholder="e.g., Maerua Mall Branch" />
+      <div class="meta">
+        <span class="hint">Optional</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="accountNumber">Account Number</label>
+      <input id="accountNumber" type="text" formControlName="accountNumber" placeholder="Enter account number" />
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error" *ngIf="bankingForm.get('accountNumber')?.touched && bankingForm.get('accountNumber')?.hasError('required')">
+          This field is required.
+        </span>
+        <span class="error" *ngIf="bankingForm.get('accountNumber')?.touched && !bankingForm.get('accountNumber')?.hasError('required') && bankingForm.get('accountNumber')?.invalid">
+          Please enter 6–30 characters (digits/letters/space/hyphen).
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="accountType">Account Type</label>
+      <select id="accountType" formControlName="accountType">
+        <option *ngFor="let t of accountTypes" [value]="t.value">{{ t.label }}</option>
+      </select>
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error" *ngIf="bankingForm.get('accountType')?.touched && bankingForm.get('accountType')?.hasError('required')">
+          This field is required.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="onPrevious()" class="btn btn-primary">Previous Page</button>
+      <button type="button" (click)="onSubmit()" class="btn btn-save">Save Banking Details</button>
+      <button type="button" (click)="onNext()" class="btn btn-primary">Next Page</button>
+    </div>
+  </form>
+</div>

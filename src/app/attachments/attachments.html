@@ -1,0 +1,109 @@
+<div class="form-container">
+   <app-progress-stepper [currentStep]="4"></app-progress-stepper>
+
+  <p-toast></p-toast>
+  <div class="form-header">
+    <h2>Section 6: Attachments / Uploads</h2>
+    <p>Please upload required documents</p>
+  </div>
+
+  <form [formGroup]="attachmentsForm">
+    <div class="upload-section">
+
+      <div class="form-field">
+        <label for="borrowerIdProof">Borrower ID Proof *</label>
+        <div class="file-upload-wrapper" 
+             [class.ng-invalid]="attachmentsForm.get('borrowerIdProof')?.invalid"
+             [class.ng-touched]="attachmentsForm.get('borrowerIdProof')?.touched">
+          <input type="file" id="borrowerIdProof" (change)="onFileSelect($event, 'borrowerIdProof')"
+                 accept=".pdf,.jpg,.jpeg" class="file-input">
+          <label for="borrowerIdProof" class="file-upload-btn">Choose File</label>
+          <span class="file-name">
+            <span class="file-icon">{{getFileIcon('borrowerIdProof')}}</span>
+            {{uploadedFiles['borrowerIdProof']?.name || 'No file chosen'}}
+          </span>
+          <button type="button" *ngIf="uploadedFiles['borrowerIdProof']" 
+                  (click)="previewFile('borrowerIdProof')" class="preview-btn" title="Preview">Preview</button>
+          <button type="button" *ngIf="uploadedFiles['borrowerIdProof']" 
+                  (click)="removeFile('borrowerIdProof')" class="remove-btn">×</button>
+        </div>
+        <div *ngIf="attachmentsForm.get('borrowerIdProof')?.invalid && attachmentsForm.get('borrowerIdProof')?.touched" 
+             class="field-note error">Borrower ID Proof is required</div>
+        <small class="field-note">Accepted formats: PDF, JPG (Max 5MB)</small>
+      </div>
+
+      <div class="form-field">
+        <label for="payslipProofOfIncome">Payslip / Proof of Income *</label>
+        <div class="file-upload-wrapper"
+             [class.ng-invalid]="attachmentsForm.get('payslipProofOfIncome')?.invalid"
+             [class.ng-touched]="attachmentsForm.get('payslipProofOfIncome')?.touched">
+          <input type="file" id="payslipProofOfIncome" (change)="onFileSelect($event, 'payslipProofOfIncome')" 
+                 accept=".pdf,.jpg,.jpeg" class="file-input">
+          <label for="payslipProofOfIncome" class="file-upload-btn">Choose File</label>
+          <span class="file-name">
+            <span class="file-icon">{{getFileIcon('payslipProofOfIncome')}}</span>
+            {{uploadedFiles['payslipProofOfIncome']?.name || 'No file chosen'}}
+          </span>
+          <button type="button" *ngIf="uploadedFiles['payslipProofOfIncome']" 
+                  (click)="previewFile('payslipProofOfIncome')" class="preview-btn" title="Preview">Preview</button>
+          <button type="button" *ngIf="uploadedFiles['payslipProofOfIncome']" 
+                  (click)="removeFile('payslipProofOfIncome')" class="remove-btn">×</button>
+        </div>
+        <div *ngIf="attachmentsForm.get('payslipProofOfIncome')?.invalid && attachmentsForm.get('payslipProofOfIncome')?.touched" 
+             class="field-note error">Payslip / Proof of Income is required</div>
+        <small class="field-note">Accepted formats: PDF, JPG (Max 5MB)</small>
+      </div>
+
+      <div class="form-field">
+        <label for="bankStatement">Bank Statement (Last 3 months) *</label>
+        <div class="file-upload-wrapper"
+             [class.ng-invalid]="attachmentsForm.get('bankStatement')?.invalid"
+             [class.ng-touched]="attachmentsForm.get('bankStatement')?.touched">
+          <input type="file" id="bankStatement" (change)="onFileSelect($event, 'bankStatement')" 
+                 accept=".pdf,.jpg,.jpeg" class="file-input">
+          <label for="bankStatement" class="file-upload-btn">Choose File</label>
+          <span class="file-name">
+            <span class="file-icon">{{getFileIcon('bankStatement')}}</span>
+            {{uploadedFiles['bankStatement']?.name || 'No file chosen'}}
+          </span>
+          <button type="button" *ngIf="uploadedFiles['bankStatement']" 
+                  (click)="previewFile('bankStatement')" class="preview-btn" title="Preview">Preview</button>
+          <button type="button" *ngIf="uploadedFiles['bankStatement']" 
+                  (click)="removeFile('bankStatement')" class="remove-btn">×</button>
+        </div>
+        <div *ngIf="attachmentsForm.get('bankStatement')?.invalid && attachmentsForm.get('bankStatement')?.touched" 
+             class="field-note error">Bank Statement is required</div>
+        <small class="field-note">Accepted formats: PDF, JPG (Max 5MB)</small>
+      </div>
+
+      <div class="form-field">
+        <label for="proofOfAddress">Proof of Address *</label>
+        <div class="file-upload-wrapper"
+             [class.ng-invalid]="attachmentsForm.get('proofOfAddress')?.invalid"
+             [class.ng-touched]="attachmentsForm.get('proofOfAddress')?.touched">
+          <input type="file" id="proofOfAddress" (change)="onFileSelect($event, 'proofOfAddress')" 
+                 accept=".pdf,.jpg,.jpeg" class="file-input">
+          <label for="proofOfAddress" class="file-upload-btn">Choose File</label>
+          <span class="file-name">
+            <span class="file-icon">{{getFileIcon('proofOfAddress')}}</span>
+            {{uploadedFiles['proofOfAddress']?.name || 'No file chosen'}}
+          </span>
+          <button type="button" *ngIf="uploadedFiles['proofOfAddress']" 
+                  (click)="previewFile('proofOfAddress')" class="preview-btn" title="Preview">Preview</button>
+          <button type="button" *ngIf="uploadedFiles['proofOfAddress']" 
+                  (click)="removeFile('proofOfAddress')" class="remove-btn">×</button>
+        </div>
+        <div *ngIf="attachmentsForm.get('proofOfAddress')?.invalid && attachmentsForm.get('proofOfAddress')?.touched" 
+             class="field-note error">Proof of Address is required</div>
+        <small class="field-note">Accepted formats: PDF, JPG (Max 5MB)</small>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="previousPage()" class="btn btn-next">Previous Page</button>
+      <button type="button" (click)="saveAttachments()" class="btn btn-save">Save Attachments</button>
+      <button type="button" (click)="nextPage()" class="btn btn-next">Next Page</button>
+    </div>
+  </form>
+</div>

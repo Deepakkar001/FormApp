@@ -1,0 +1,59 @@
+<app-progress-stepper [currentStep]="6"></app-progress-stepper>
+<p-toast></p-toast>
+
+<div class="form-container">
+  <h2>Terms & Acknowledgment</h2>
+  
+  <form class="terms-form">
+    <!-- Confirmation Checkbox -->
+    
+    <!-- Signatures -->
+    <div class="form-group">
+      <label>Signatures *</label>
+      <div class="signature-group">
+        <div class="signature-field digital-signature">
+          <label class="signature-label">Borrower Signature</label>
+          <input type="text" [(ngModel)]="borrowerSignature" name="borrowerSignature" placeholder="Digital Signature" required>
+        </div>
+        <div class="signature-field digital-signature">
+          <label class="signature-label">Lender Signature</label>
+          <input type="text" [(ngModel)]="lenderSignature" name="lenderSignature" placeholder="Digital Signature" required>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Witness (Borrower) -->
+    <div class="form-group">
+      <label>Witness (Borrower)</label>
+      <input type="text" [(ngModel)]="witnessBorrower" name="witnessBorrower" placeholder="Optional">
+    </div>
+    
+    <!-- Witness (Lender) -->
+    <div class="form-group">
+      <label>Witness (Lender)</label>
+      <input type="text" [(ngModel)]="witnessLender" name="witnessLender" placeholder="Optional">
+    </div>
+    
+    <!-- Date & Place of Signature -->
+    <div class="form-group">
+      <label>Date & Place of Signature *</label>
+      <div class="date-place-group">
+        <input type="date" [(ngModel)]="signatureDate" name="signatureDate" required>
+        <input type="text" [(ngModel)]="signaturePlace" name="signaturePlace" placeholder="Place" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="confirmationChecked" name="confirmation" required>
+        <span class="checkmark"></span>
+        I acknowledge that this agreement has been completed in full prior to my signature.
+      </label>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button type="button" class="btn btn-next" (click)="goToPrevious()">Previous</button>
+      <button type="submit" class="btn btn-save" (click)="onSubmit()">Submit</button>
+    </div>
+  </form>
+</div>

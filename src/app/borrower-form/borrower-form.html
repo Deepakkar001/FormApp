@@ -1,0 +1,112 @@
+<div class="form-container">
+  <app-progress-stepper [currentStep]="0"></app-progress-stepper>
+  <p-toast></p-toast>
+  <div class="form-header">
+    <h1>Borrower Information</h1>
+    <p>Please enter all required borrower information below.</p>
+  </div>
+  
+  <form [formGroup]="borrowerForm" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      
+      <div class="form-field">
+        <label for="fullName">Full Name (Borrower) <span class="required">*</span></label>
+        <input type="text" id="fullName" formControlName="fullName" placeholder="e.g., John Doe">
+        <div *ngIf="borrowerForm.get('fullName')?.invalid && borrowerForm.get('fullName')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="telephoneNumber">Telephone Number <span class="required">*</span></label>
+        <input type="tel" id="telephoneNumber" formControlName="telephoneNumber" placeholder="e.g., +1234567890">
+        <div *ngIf="borrowerForm.get('telephoneNumber')?.invalid && borrowerForm.get('telephoneNumber')?.touched" class="field-note error">
+          * Not a Valid Mobile Number
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="emailAddress">Email Address <span class="required">*</span></label>
+        <input type="email" id="emailAddress" formControlName="emailAddress" placeholder="e.g., john.doe@example.com">
+        <div *ngIf="borrowerForm.get('emailAddress')?.invalid && borrowerForm.get('emailAddress')?.touched" class="field-note error">
+          * Not a Valid Email Address
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="maritalStatus">Marital Status <span class="required">*</span></label>
+        <select id="maritalStatus" formControlName="maritalStatus">
+          <option value="">Select Status</option>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Widowed">Widowed</option>
+        </select>
+        <div *ngIf="borrowerForm.get('maritalStatus')?.invalid && borrowerForm.get('maritalStatus')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="postalAddress">Postal Address</label>
+        <textarea id="postalAddress" formControlName="postalAddress" placeholder="Enter postal address" rows="2"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="residentialAddress">Residential Address <span class="required">*</span></label>
+        <textarea id="residentialAddress" formControlName="residentialAddress" placeholder="Enter residential address" rows="2"></textarea>
+        <div *ngIf="borrowerForm.get('residentialAddress')?.invalid && borrowerForm.get('residentialAddress')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="idPassportNumber">ID/Passport Number <span class="required">*</span></label>
+        <input type="text" id="idPassportNumber" formControlName="idPassportNumber" placeholder="e.g., ID123456789">
+        <div *ngIf="borrowerForm.get('idPassportNumber')?.invalid && borrowerForm.get('idPassportNumber')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="occupation">Occupation <span class="required">*</span></label>
+        <input type="text" id="occupation" formControlName="occupation" placeholder="e.g., Software Engineer">
+        <div *ngIf="borrowerForm.get('occupation')?.invalid && borrowerForm.get('occupation')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="employerName">Employer Name <span class="required">*</span></label>
+        <input type="text" id="employerName" formControlName="employerName" placeholder="e.g., ABC Company">
+        <div *ngIf="borrowerForm.get('employerName')?.invalid && borrowerForm.get('employerName')?.touched" class="field-note error">
+          * Required
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="employerTelephone">Employer Telephone <span class="required">*</span></label>
+        <input type="tel" id="employerTelephone" formControlName="employerTelephone" placeholder="e.g., +1234567890">
+        <div *ngIf="borrowerForm.get('employerTelephone')?.invalid && borrowerForm.get('employerTelephone')?.touched" class="field-note error">
+           * Not a Valid Mobile Number
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="employerAddress">Employer Address</label>
+        <textarea id="employerAddress" formControlName="employerAddress" placeholder="Enter employer address" rows="2"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="payslipEmployeeNo">Payslip / Employee No.</label>
+        <input type="text" id="payslipEmployeeNo" formControlName="payslipEmployeeNo" placeholder="e.g., EMP001">
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="saveBorrower()" class="btn btn-save">Save Borrower Details</button>
+      <button type="button" (click)="nextPage()" class="btn btn-primary">Next Page</button>
+    </div>
+  </form>
+</div>

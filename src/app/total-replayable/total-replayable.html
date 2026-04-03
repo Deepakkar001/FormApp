@@ -1,0 +1,155 @@
+
+<div class="bank-page">
+    <app-progress-stepper [currentStep]="3"></app-progress-stepper>
+  <p-toast></p-toast>
+  <header class="page-header">
+    <h1>Total Repayable
+    </h1>
+    <p>Please enter all required loan information below.</p>
+  </header>
+
+  <form [formGroup]="loanForm" (ngSubmit)="onSubmit()" class="bank-card form-grid" novalidate>
+    <div class="form-row">
+      <label for="loanAmount">Loan Amount (N$)</label>
+      <input id="loanAmount" type="number" step="0.01" min="0" formControlName="loanAmount"
+        placeholder="e.g., 100000" />
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error"
+          *ngIf="loanForm.get('loanAmount')?.touched && loanForm.get('loanAmount')?.hasError('required')">
+          This field is required.
+        </span>
+        <span class="error"
+          *ngIf="loanForm.get('loanAmount')?.touched && !loanForm.get('loanAmount')?.hasError('required') && loanForm.get('loanAmount')?.invalid">
+          Enter a valid amount greater than 0.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="financeChargePercent">Finance Charges (%)</label>
+      <input id="financeChargePercent" type="number" step="0.01" min="0" max="30" formControlName="financeChargePercent"
+        placeholder="e.g., 12.5" />
+      <div class="meta">
+        <span class="hint">Should not exceed 30% of principal debt</span>
+        <span class="error"
+          *ngIf="loanForm.get('financeChargePercent')?.touched && loanForm.get('financeChargePercent')?.hasError('required')">
+          This field is required.
+        </span>
+        <span class="error"
+          *ngIf="loanForm.get('financeChargePercent')?.touched && !loanForm.get('financeChargePercent')?.hasError('required') && loanForm.get('financeChargePercent')?.invalid">
+          Must be between 0% and 30%.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Finance Charge Type</label>
+      <div class="radio-group">
+        <label><input type="radio" formControlName="financeChargeType" value="fixed" /> Fixed</label>
+        <label><input type="radio" formControlName="financeChargeType" value="variable" /> Variable</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="totalRepayable">Total Repayable (N$)</label>
+      <input id="totalRepayable" type="number" formControlName="totalRepayable" readonly />
+      <div class="meta">
+        <span class="hint">Auto-calculated: principal + finance charges</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="installmentAmount">Installment Amount (N$)</label>
+      <input id="installmentAmount" type="number" formControlName="installmentAmount" readonly />
+      <div class="meta">
+        <span class="hint">Auto-calculated: total / number of installments</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="numberOfInstallments">Number of Installments</label>
+      <input id="numberOfInstallments" type="number" min="1" formControlName="numberOfInstallments"
+        placeholder="e.g., 12" />
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error"
+          *ngIf="loanForm.get('numberOfInstallments')?.touched && loanForm.get('numberOfInstallments')?.hasError('required')">
+          This field is required.
+        </span>
+        <span class="error"
+          *ngIf="loanForm.get('numberOfInstallments')?.touched && !loanForm.get('numberOfInstallments')?.hasError('required') && loanForm.get('numberOfInstallments')?.invalid">
+          Must be at least 1.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="installmentFrequency">Installment Frequency</label>
+      <select id="installmentFrequency" formControlName="installmentFrequency">
+        <option value="monthly">Monthly</option>
+        <option value="weekly">Weekly</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="firstInstallmentDate">First Installment Date</label>
+      <input id="firstInstallmentDate" type="date" formControlName="firstInstallmentDate" />
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error"
+          *ngIf="loanForm.get('firstInstallmentDate')?.touched && loanForm.get('firstInstallmentDate')?.hasError('required')">
+          This field is required.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="lastInstallmentDate">Last Installment Date</label>
+      <input id="lastInstallmentDate" type="date" formControlName="lastInstallmentDate" />
+      <div class="meta">
+        <span class="hint">Auto-calculated from frequency and count (editable)</span>
+        <span class="error"
+          *ngIf="loanForm.get('lastInstallmentDate')?.touched && loanForm.get('lastInstallmentDate')?.hasError('required')">
+          This field is required.
+        </span>
+        <span class="error"
+          *ngIf="loanForm.errors?.['lastBeforeFirst'] && loanForm.get('lastInstallmentDate')?.touched">
+          Last installment must be on/after the first installment date.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="penaltyInterestPercent">Penalty Interest (%)</label>
+      <input id="penaltyInterestPercent" type="number" step="0.01" min="0" max="5"
+        formControlName="penaltyInterestPercent" placeholder="e.g., 3" />
+      <div class="meta">
+        <span class="hint">Max 5%, applicable up to 3 months</span>
+        <span class="error"
+          *ngIf="loanForm.get('penaltyInterestPercent')?.touched && loanForm.get('penaltyInterestPercent')?.invalid">
+          Must be between 0% and 5%.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="loanPeriodEndDate">Loan Period (End Date)</label>
+      <input id="loanPeriodEndDate" type="date" formControlName="loanPeriodEndDate" />
+      <div class="meta">
+        <span class="hint required">Required</span>
+        <span class="error"
+          *ngIf="loanForm.get('loanPeriodEndDate')?.touched && loanForm.get('loanPeriodEndDate')?.hasError('required')">
+          This field is required.
+        </span>
+      </div>
+    </div>
+    <div class="form-actions">
+       <button type="button" (click)="onPrevious()" class="btn btn-primary">Previous Page</button>
+      <button type="button" (click)="onSubmit()" class="btn btn-save">Save Loan Details</button>
+      <button type="button" (click)="onNext()" class="btn btn-primary">Next Page</button>
+    </div>
+
+
+  </form>
+</div>

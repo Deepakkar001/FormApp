@@ -1,0 +1,79 @@
+<div class="bank-page">
+  <app-progress-stepper [currentStep]="5"></app-progress-stepper>
+  <p-toast></p-toast>
+  
+  <header class="page-header">
+    <h1>Compliance</h1>
+    <p>Record regulatory compliance and borrower acknowledgments.</p>
+  </header>
+
+  <form [formGroup]="complianceForm" (ngSubmit)="onSubmit()" class="bank-card form-grid" novalidate>
+    <div class="form-row">
+      <label for="namfisaComplaintInfoProvided">NAMFISA Complaint Info Provided <span class="required">*</span></label>
+      <select id="namfisaComplaintInfoProvided" formControlName="namfisaComplaintInfoProvided">
+        <option value="">Select Option</option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+      <div *ngIf="complianceForm.get('namfisaComplaintInfoProvided')?.invalid && complianceForm.get('namfisaComplaintInfoProvided')?.touched" class="field-note error">
+        * Required
+      </div>
+      <div class="meta">
+        <span class="hint">Confirmation that borrower was informed</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="coolingOffPeriodExplained">Cooling-Off Period Explained <span class="required">*</span></label>
+      <select id="coolingOffPeriodExplained" formControlName="coolingOffPeriodExplained">
+        <option value="">Select Option</option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
+      <div *ngIf="complianceForm.get('coolingOffPeriodExplained')?.invalid && complianceForm.get('coolingOffPeriodExplained')?.touched" class="field-note error">
+        * Required
+      </div>
+      <div class="meta">
+        <span class="hint">Yes/No confirmation</span>
+      </div>
+    </div>
+
+    <div class="form-row full-width">
+      <label for="insuranceDetails">Insurance Details <span class="required">*</span></label>
+      <textarea 
+        id="insuranceDetails" 
+        formControlName="insuranceDetails" 
+        rows="4"
+        placeholder="Enter insurer name, policy number, coverage details, etc."
+      ></textarea>
+      <div *ngIf="complianceForm.get('insuranceDetails')?.invalid && complianceForm.get('insuranceDetails')?.touched" class="field-note error">
+        * Required
+      </div>
+      <div class="meta">
+        <span class="hint">Provide insurance information</span>
+      </div>
+    </div>
+
+    <div class="form-row full-width">
+      <label for="financeChargesBreakdown">Finance Charges Breakdown <span class="required">*</span></label>
+      <textarea 
+        id="financeChargesBreakdown" 
+        formControlName="financeChargesBreakdown" 
+        rows="4"
+        placeholder="Detail the breakdown of all finance charges, fees, and interest components..."
+      ></textarea>
+      <div *ngIf="complianceForm.get('financeChargesBreakdown')?.invalid && complianceForm.get('financeChargesBreakdown')?.touched" class="field-note error">
+        * Required
+      </div>
+      <div class="meta">
+        <span class="hint">Itemize finance charges for transparency</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="previousPage()" class="btn btn-primary">Previous Page</button>
+      <button type="button" (click)="saveCompliance()" class="btn btn-save">Save Compliance</button>
+      <button type="button" (click)="nextPage()" class="btn btn-primary">Next Page</button>
+    </div>
+  </form>
+</div>

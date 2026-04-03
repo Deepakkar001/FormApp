@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://cdn.jsdelivr.net/npm/primeng@20.2.0/themes/lara-light-blue/theme.css');
+@import url('https://cdn.jsdelivr.net/npm/primeng@20.2.0/primeng.min.css');
+
+
+@import "tailwindcss";
+p-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+ 
+.p-toast .p-toast-message {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 300px;
+}
+ 
+.p-toast .p-toast-message-success {
+  border-left: 4px solid #10b981;
+}
+ 
+.p-toast .p-toast-message-error {
+  border-left: 4px solid #ef4444;
+}
+ 
+.p-toast .p-toast-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+ 
+.p-toast .p-toast-summary {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+ 
+.p-toast .p-toast-detail {
+  color: #475569;
+  font-size: 14px;
+}
